@@ -18,19 +18,70 @@
       font-style: normal;
     }
 
+    .main {
+      background-image: url('assets/bg-8.webp');
+      background-size: cover;
+      background-position: center;
+      color:aliceblue;
+    }
+
     /* Use more styles as needed */
   
   </style>
 </head>
-<body class="p-4">
+<body class="p-4 main">
 
-  <!-- Complete this part -->
+
+ <!-- My title -->
+<div class="container">
+  <h1 class="text-center mb-4" style="font-family: 'Luna'; color: rgb(226, 212, 16);">Which Ghibli Character Are You?</h1></div>
+
+  <div id="app" class="container">
+    
+    <div class="row mb-4">
+      <h3 class="mb-3">Select your traits:</h3>
+      <div class="col-md-3 mb-2" v-for="trait in availableTraits" :key="trait">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" :id="trait" :value="trait" v-model="selectedTraits">
+          <label class="form-check-label" :for="trait">
+            {{ trait }}
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Reveal button -->
+    <div class="text-center mb-4">
+      <button class="btn btn-warning" @click="findCharacter">Reveal My Character!</button>
+    </div>
+    
+    <!-- Result show -->
+    <div class="result-container text-center" v-if="result">
+      <h2><strong>You are mostly like: {{ result.name }}!</strong></h2>
+      <img :src="result.image" alt="Character" class="character-img my-3">
+      <p class="lead" style="color: aqua;"><strong>{{ result.description }}</strong></p>
+    </div>
+    
+    <div class="alert alert-warning text-center" v-if="noResult">
+       Hmm...Either you didn't select any traits or we
+couldn't find a match. Please try again! 
+    </div>
+  </div>
+  
 
 <script>
 Vue.createApp({
   data() {
     return {
-      /* complete this part */
+      //Selected traits
+      selectedTraits: [],
+      //Available traits
+      availableTraits:[
+        'Brave', 'Kind', 'Curious', 'Adventurous', 'Independent', 
+        'Protective', 'Empathetic', 'Mischievous', 'Funny', 
+        'Dreamy', 'Witty', 'Loyal', 'Hardworking', 'Ambitious', 'Quiet'
+      ],
+      //Characters data
       characters: [
         {
           name: 'Totoro',
